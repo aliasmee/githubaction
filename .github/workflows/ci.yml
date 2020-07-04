@@ -39,8 +39,8 @@ jobs:
     - name: rsync www to remote web server
       uses: burnett01/rsync-deployments@4.1
       with:
-        switches: -avzr --delete --exclude={CNAME,.git/,.github/}
-        path: ./
+        switches: -avzr --delete --exclude="CNAME" --exclude=".git/" --exclude=".github/"
+        path: .
         remote_path: /home/${{ secrets.WEB_SSH_USER }}/hhh
         remote_host: ${{ secrets.WEB_SSH_HOST }}
         remote_port: ${{ secrets.WEB_SSH_PORT }}
