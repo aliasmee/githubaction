@@ -1,0 +1,51 @@
+on:
+  push: # 当发生推送事件时
+    tags: # 当推送 tag 时
+      - v*
+    branches: # 当推送分支时
+      - master
+  pull_request: # 当发生合并事件时
+    branches:
+      - master
+
+env:
+  MY_V2_SERVER_PRIVATE_KEY: ${{ secrets.WEB_SSH_PRIVATE_KEY }} # 服务器私钥
+  MY_V2_USER: ${{ secrets.WEB_SSH_USER }}
+  MY_V2_IP: ${{ secrets.WEB_SSH_HOSTS }}
+  cache-name: 2020
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Run a one-line script
+      run: echo Hello, world!
+
+    # Runs a set of commands using the runners shell
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: rsync test file
+      uses: contention/rsync-deployments@v1.0.0
+      env:
+        DEPLOY_KEY: ${{ secrets.MY_V2_SERVER_PRIVATE_KEY }}
+      with:
+        args: "-avzr --delete ${{ env.MY_V2_USER }}@${{ env.MY_V2_IP }}:~/hhh/"
