@@ -56,3 +56,15 @@ jobs:
         DEPLOY_KEY: ${{ secrets.MY_V2_SERVER_PRIVATE_KEY }}
       with:
         args: "-avzr --delete ${{ env.MY_V2_USER }}@${{ env.MY_V2_IP }}:~/hhh/"
+
+    - uses: actions/checkout@v2
+    - name: rsync deployments
+      uses: burnett01/rsync-deployments@4.1
+      with:
+        switches: -avzr --delete --exclude="./CNAME,./git" --include="" --filter=""
+        path: ./
+        remote_path: /home/${{ secrets.WEB_SSH_USER }}/hhh
+        remote_host: ${{ secrets.WEB_SSH_HOSTS }}
+        remote_port: ${{ secrets.WEB_SSH_PORT }}
+        remote_user: ${{ secrets.WEB_SSH_USER }}
+        remote_key: ${{ secrets.WEB_SSH_PRIVATE_KEY }}
