@@ -54,7 +54,7 @@ jobs:
     - name: rsync deployments
       uses: burnett01/rsync-deployments@4.1
       with:
-        switches: -avzr --delete --exclude="./CNAME,./.git" --include="" --filter=""
+        switches: -avzr --delete --exclude="./CNAME" --exclude="./.git/"
         path: ./
         remote_path: /home/${{ secrets.WEB_SSH_USER }}/hhh
         remote_host: ${{ secrets.WEB_SSH_HOST }}
