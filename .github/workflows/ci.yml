@@ -48,7 +48,7 @@ jobs:
         mkdir ~/.ssh
         echo "$MY_V2_SERVER_PRIVATE_KEY" > ~/.ssh/gh_actions_key
         chmod 600 ~/.ssh/gh_actions_key
-        rsync -avz -e "ssh -vvv -i ~/.ssh/gh_actions_key -o StrictHostKeyChecking=no" . $MY_V2_USER@MY_V2_IP:~/hhh/
+        rsync -avz -e "ssh -vvv -i ~/.ssh/gh_actions_key -o StrictHostKeyChecking=no" . ${MY_V2_USER}@${MY_V2_IP}:~/hhh/
 
     - name: rsync test file
       uses: contention/rsync-deployments@v1.0.0
