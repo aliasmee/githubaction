@@ -43,12 +43,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: prepare ssh directory
-      run: |
-        mkdir ~/.ssh
-        echo "$MY_V2_SERVER_PRIVATE_KEY" > ~/.ssh/gh_actions_key
-        chmod 600 ~/.ssh/gh_actions_key
-        rsync -avz -e "ssh -vvv -i ~/.ssh/gh_actions_key -o StrictHostKeyChecking=no" . ${MY_V2_USER}@${MY_V2_IP}:~/hhh/
+ #   - name: prepare ssh directory
+ #     run: |
+ #       mkdir ~/.ssh
+ #       echo "$MY_V2_SERVER_PRIVATE_KEY" > ~/.ssh/gh_actions_key
+ #       chmod 600 ~/.ssh/gh_actions_key
+ #       rsync -avz -e "ssh -vvv -i ~/.ssh/gh_actions_key -o StrictHostKeyChecking=no" . ${MY_V2_USER}@${MY_V2_IP}:~/hhh/
 
     - uses: actions/checkout@v2
     - name: rsync deployments
